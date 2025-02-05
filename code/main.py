@@ -5,16 +5,16 @@ import pygame
 
 # Импорт классов и функций из графического модуля
 from graphics import (
-    platforms, screen, fps, size, character, knight, enemies, 
-    main_character, menu, money, load_image, initialization, saving_points, 
-    damage_waves, update_map_after_save, Money, money_list, 
-    new_game_confirmation, Crawlid, trigger_blocks, Sly, npcs, 
+    platforms, screen, fps, size, character, knight, enemies,
+    main_character, menu, money, load_image, initialization, saving_points,
+    damage_waves, update_map_after_save, Money, money_list,
+    new_game_confirmation, Crawlid, trigger_blocks, Sly, npcs,
     sly_dialogue, sly_shop, background, Elderbug, elderbug_dialogue
 )
 
 # Импорт данных
 from data import (
-    move_speed, start_jump_from_wall_position, start_jump_altitude, 
+    move_speed, start_jump_from_wall_position, start_jump_altitude,
     fall_speed, global_cords, respawn_cords, FONT
 )
 
@@ -25,7 +25,7 @@ import load_music
 
 # Импорт контроллера громкости
 from music_volume_controller import (
-    volume_controller_filler, volume_controller_slider, volume_controller_base, 
+    volume_controller_filler, volume_controller_slider, volume_controller_base,
     Base, Filler, Slider
 )
 
@@ -37,6 +37,76 @@ from new_game_intro import new_game_intro
 
 # Импорт конца игры
 import end_game
+
+import tkinter as tk
+from tkinter import messagebox
+from auth import register, login
+
+
+def open_register_window(): # функция, которая открывает окно регистрации
+    def handle_register(): # проверка на создание такого аккаунта
+        username = entry_username.get()
+        password = entry_password.get()
+        result = register(username, password)
+        messagebox.showinfo("Регистрация", result)
+        if result == "Регистрация прошла успешно!":
+            register_window.destroy()
+            start_game()
+
+    register_window = tk.Toplevel(root)
+    register_window.title("Регистрация")
+    tk.Label(register_window, text="Имя пользователя:").pack(pady=5)
+    entry_username = tk.Entry(register_window)
+    entry_username.pack(pady=5)
+    tk.Label(register_window, text="Пароль:").pack(pady=5)
+    entry_password = tk.Entry(register_window, show="*")
+    entry_password.pack(pady=5)
+    tk.Button(register_window, text="Зарегистрироваться", command=handle_register).pack(pady=10)
+
+
+def open_login_window(): # открывает окно, чтобы войти
+    def handle_login(): # проверка на создание такого аккаунта
+        username = entry_username.get()
+        password = entry_password.get()
+        result = login(username, password)
+        messagebox.showinfo("Вход", result)
+        if result == "Вход выполнен успешно!":
+            login_window.destroy()
+            start_game()
+
+    login_window = tk.Toplevel(root)
+    login_window.title("Вход")
+    tk.Label(login_window, text="Имя пользователя:").pack(pady=5)
+    entry_username = tk.Entry(login_window)
+    entry_username.pack(pady=5)
+    tk.Label(login_window, text="Пароль:").pack(pady=5)
+    entry_password = tk.Entry(login_window, show="*")
+    entry_password.pack(pady=5)
+    tk.Button(login_window, text="Войти", command=handle_login).pack(pady=10)
+
+
+def start_game(): # 'Добро пожаловать в игру', сообщает, что вы вошли в игру
+    game_window = tk.Toplevel(root)
+    game_window.title("Игра")
+    tk.Label(game_window, text="Добро пожаловать в игру!").pack(pady=20)
+
+
+def main(): # окно регистрации / войти в аккаунт
+    global root  # Определить root как глобальный
+    root = tk.Tk()
+    root.title("Регистрация и вход")
+    root.geometry("300x150")
+
+    tk.Label(root, text="Добро пожаловать! Выберите действие:").pack(pady=10)
+    tk.Button(root, text="Регистрация", command=open_register_window).pack(pady=5)
+    tk.Button(root, text="Вход", command=open_login_window).pack(pady=5)
+
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    main()
+
 
 # индексы анимаций гг
 ATTACKING_SHEET = 5

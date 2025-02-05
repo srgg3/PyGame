@@ -1,5 +1,5 @@
-respawn_x: 8780
-respawn_y: 9220
+respawn_x: 0
+respawn_y: 0
 main_character_money: 0
 money: -180, 120, 50, 1, False
 money: 75, 350, 50, 2, False
@@ -9,6 +9,6 @@ main_character_attack_damage: 1
 main_character_maximum_health: 5
 main_character_maximum_healings: 6
 main_character_killed_enemies: 0
-main_character_total_damage: 1
+main_character_total_damage: 0
 main_character_deaths: 0
 boss_killed: False
